@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
                 noRecoil->update();
 
             if (configLoader->isSenseOn())
-                sense->update();
+                sense->update(counter);
 
             // all ran fine
             if (counter % 1000 == 0)
