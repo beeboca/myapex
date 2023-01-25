@@ -96,6 +96,13 @@ namespace mem
         if (!success)
             throw new std::invalid_argument("Failed to write short at address: " + address);
     }
+    void readbytearray(long address, char* buffer, int size) {
+    	for (int i = 0; i < size; i++) {
+    	    bool success = Read((long)(address + (long)i), &(buffer[i]), sizeof(char));
+            if (!success)
+                throw new std::invalid_argument("Failed to read byte at address: " + address);
+    	}
+    }
     int ReadInt(long address)
     {
         int size = sizeof(int);
@@ -153,5 +160,26 @@ namespace mem
         stream << "0x" << std::hex << pointer;
         std::string result(stream.str());
         return result;
+    }
+        std::string get_client_class_name(long entity_ptr) {
+        long client_networkable_vtable;
+        long get_client_entity;
+        int offset;
+        long network_name_ptr;
+        char buffer[32];
+        // Read the ClientClass's network name for to given entity
+        client_networkable_vtable = mem::ReadLong(entity_ptr + 3 * 8);
+        get_client_entity = mem::ReadLong(client_networkable_vtable + 3 * 8);
+        offset = mem::ReadInt(get_client_entity + 3);
+        network_name_ptr = mem::ReadLong(get_client_entity + offset + 7 + 16);
+        mem::readbytearray(network_name_ptr, buffer, 32);
+        std::string result;
+        // Return up to 32 chars from the network name
+        size_t len;
+        for (len = 0; len < 32; ++len)
+            if (buffer[len] == '\0')
+                break;
+        result.assign(buffer, len);
+            return result;
     }
 }
