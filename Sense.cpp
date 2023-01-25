@@ -83,8 +83,8 @@ public:
 			case 186: // Backpack (Level 4 / Gold)
 			case 167: // Head Level 3 / Purple
 		 	case 168: // Head Level 4 / Gold
-		    case 163: // shield battery
-		    case 210: //light mag level 3
+		    	case 163: // shield battery
+		    	case 210: //light mag level 3
 			case 211: //light mag level 4
 			case 214: //heavy mag level 3
 			case 215: //heavy mag level 4
